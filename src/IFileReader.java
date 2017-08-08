@@ -1,7 +1,10 @@
+import java.io.File;
 
 public interface IFileReader {
 
-	String getFile();
+	
+	
+	File getFile();
 	void ParseFile();
 	
 }
