@@ -15,8 +15,10 @@ public class ScheduleData {
 	ArrayList<Employee> employees = new ArrayList<Employee>();
 	//HourlyData hourlydata;
 	HashMap<Date,ArrayList<Integer>> weeklydata = new HashMap<Date,ArrayList<Integer>>();
+	ArrayList<Integer> averageday = new ArrayList<Integer>();
 	DateFormat date = new SimpleDateFormat("dd/MM/yyyy");
 	DateFormat datetime = new SimpleDateFormat("dd/MM/yyyy h:mm a");
+	
 	
 	
 	public void addEmployee(Employee e) {
@@ -89,7 +91,7 @@ public class ScheduleData {
 	}
 	
 	public void FakeDataPerHour() {
-		Calendar start = Calendar.getInstance();
+		/*Calendar start = Calendar.getInstance();
 		start.setTime(startofweek);
 		Calendar end = Calendar.getInstance();
 		end.setTime(endofweek);
@@ -97,6 +99,8 @@ public class ScheduleData {
 			ArrayList<Integer> arr =new ArrayList<Integer>(Arrays.asList(0,0,3,5,8,8,8,6,4,3,2,0));
 			weeklydata.put(d.getTime(),arr);
 		}
+		*/
+		averageday =new ArrayList<Integer>(Arrays.asList(0,0,3,5,8,8,8,6,4,3,2,0));
 	}
 	
 	public void printHashMap() {
