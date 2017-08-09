@@ -21,9 +21,7 @@ public class Program {
 		EnergyGraph eg1 = new EnergyGraph(ed);
 		EmployeeGraph eg = new EmployeeGraph(sd);
 		
-		//sd.setDataPerHour();
-		
-		//sd.printHashMap();
+		Analytics anal = new Analytics(sd,ed); 
 	}
 
 }

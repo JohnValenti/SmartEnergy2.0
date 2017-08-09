@@ -14,7 +14,7 @@ public class ScheduleData {
 	Date endofweek;
 	ArrayList<Employee> employees = new ArrayList<Employee>();
 	//HourlyData hourlydata;
-	HashMap<Date,ArrayList<Integer>> weeklydata = new HashMap<Date,ArrayList<Integer>>();
+	HashMap<String,ArrayList<Integer>> weeklydata = new HashMap<String,ArrayList<Integer>>();
 	ArrayList<Integer> averageday = new ArrayList<Integer>();
 	DateFormat date = new SimpleDateFormat("dd/MM/yyyy");
 	DateFormat datetime = new SimpleDateFormat("dd/MM/yyyy h:mm a");
@@ -48,7 +48,7 @@ public class ScheduleData {
 		Calendar end = Calendar.getInstance();
 		end.setTime(endofweek);
 		for (Calendar d = start;d.compareTo(end)<=0;d.add(Calendar.DAY_OF_MONTH, 1)){
-			ArrayList<Integer> arr =new ArrayList<Integer>(Arrays.asList(0,0,0,0,0,0,0,0,0,0,0,0));
+			ArrayList<Integer> arr =new ArrayList<Integer>(Arrays.asList(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0));
 			weeklydata.put(d.getTime(),arr);
 			System.out.println("donehashmap");
 		}
@@ -77,7 +77,7 @@ public class ScheduleData {
 						temp.add(i,q);
 					}
 					*/
-					weeklydata.put(employees.get(e).shifts.get(s).starttime,temp);
+					//weeklydata.put(employees.get(e).shifts.get(s).starttime,temp);
 					//System.out.println(starthour);
 					//System.out.println(numberofhours);
 					//temp.addEmployeesolohour(starthour);
