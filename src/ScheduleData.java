@@ -123,7 +123,7 @@ public class ScheduleData {
 			weeklydata.put(d.getTime(),arr);
 		}
 		*/
-		averageday =new ArrayList<Integer>(Arrays.asList(0,0,0,0,1,1,1,3,3,4,8,9,9,9,10,10,7,7,2,1,1,0,0,0));
+		averageday =new ArrayList<Integer>(Arrays.asList(1,1,1,0,0,3,3,4,5,5,8,9,9,9,10,10,7,7,2,2,2,1,1,1));
 	}
 	
 	public void printHashMap() {

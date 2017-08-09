@@ -39,7 +39,7 @@ public class DualGraph extends JFrame {
 	private JPanel createGraphPanel() {
 		String chartTitle = "Daily Electricty Prices vs Employees";
 		String xAxisLabel = "Hour";
-		String yAxisLabel = "GBP/MWh";
+		String yAxisLabel = "GBP/MWh || No. of Employees || GBP";
 
 		XYSeriesCollection dataset = createData();
 
@@ -57,33 +57,20 @@ public class DualGraph extends JFrame {
 		 XYSeriesCollection dataset = new XYSeriesCollection();
 
 			// Set up series
-			XYSeries series1 = new XYSeries("August");
-			XYSeries series2 = new XYSeries("July");
-			XYSeries series3 = new XYSeries("June");
-			XYSeries series4 = new XYSeries("May");
-			XYSeries series5 = new XYSeries("April");
-			XYSeries series6 = new XYSeries("March");
-			XYSeries series7 = new XYSeries("February");
-			XYSeries series8 = new XYSeries("January");
+			XYSeries series1 = new XYSeries("Average Energy Prices");
+			XYSeries series2 = new XYSeries("Number of Employees");
+			XYSeries series3 = new XYSeries("Estimation of Energy Costs");
 
 			for(int i = 0;i<ed.August.size();i++) {
-				series1.add(i+1, ed.August.get(i));
-				series2.add(i+1, ed.July.get(i));
-				series3.add(i+1, ed.June.get(i));
-				series4.add(i+1, ed.May.get(i));
-				series5.add(i+1, ed.April.get(i));
-				series6.add(i+1, ed.March.get(i));
-				series7.add(i+1, ed.February.get(i));
-				series8.add(i+1, ed.January.get(i));
+				series1.add(i, ed.average.get(i));
+				series2.add(i,sd.averageday.get(i));
+				double cost = ed.average.get(i) * sd.averageday.get(i) * 0.1;
+				series3.add(i, cost);
 			}
+			
 			dataset.addSeries(series1);
 			dataset.addSeries(series2);
 			dataset.addSeries(series3);
-			dataset.addSeries(series4);
-			dataset.addSeries(series5);
-			dataset.addSeries(series6);
-			dataset.addSeries(series7);
-			dataset.addSeries(series8);
 
 		return dataset;
 	}
