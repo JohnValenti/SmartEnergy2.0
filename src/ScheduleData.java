@@ -43,13 +43,12 @@ public class ScheduleData {
 	
 	
 	public void initDataPerHour() {
-		
 		Calendar start = Calendar.getInstance();
 		start.setTime(startofweek);
 		Calendar end = Calendar.getInstance();
 		end.setTime(endofweek);
 		for (Calendar d = start;d.compareTo(end)<=0;d.add(Calendar.DAY_OF_MONTH, 1)){
-			ArrayList<Integer> arr =new ArrayList<Integer>(Arrays.asList(0, 0, 0, 0, 0,0,0,0,0,0,0,0));
+			ArrayList<Integer> arr =new ArrayList<Integer>(Arrays.asList(0,0,0,0,0,0,0,0,0,0,0,0));
 			weeklydata.put(d.getTime(),arr);
 			System.out.println("donehashmap");
 		}
@@ -65,10 +64,12 @@ public class ScheduleData {
 					int numberofhours = employees.get(e).shifts.get(s).endtime.getHours()-employees.get(e).shifts.get(s).starttime.getHours();
 					System.out.println(starthour);
 					System.out.println(numberofhours);
-					ArrayList<Integer> temp = weeklydata.get(employees.get(e).shifts.get(s).starttime);//.addEmployee(starthour, numberofhours);
+					System.out.println(employees.get(e).shifts.get(s).starttime);
+					System.out.println(employees.get(e).shifts.get(s).starttime);
+					ArrayList<Integer> temp = weeklydata.get(employees.get(e).shifts.get(s).getDateIgnoreTime());//.addEmployee(starthour, numberofhours);
 					System.out.println(employees.get(e).shifts.get(s).starttime);
 					int a = 0;
-					System.out.println(temp.size());
+					
 					System.out.println(a);
 					/*
 					for(int i= starthour;i<numberofhours;i++) {
@@ -90,6 +91,8 @@ public class ScheduleData {
 		}
 	}
 	
+	
+	
 	public void FakeDataPerHour() {
 		/*Calendar start = Calendar.getInstance();
 		start.setTime(startofweek);
@@ -100,7 +103,7 @@ public class ScheduleData {
 			weeklydata.put(d.getTime(),arr);
 		}
 		*/
-		averageday =new ArrayList<Integer>(Arrays.asList(0,0,3,5,8,8,8,6,4,3,2,0));
+		averageday =new ArrayList<Integer>(Arrays.asList(0,0,0,0,1,1,1,3,3,4,8,9,9,9,10,10,7,7,2,1,1,0,0,0));
 	}
 	
 	public void printHashMap() {

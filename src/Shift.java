@@ -8,4 +8,12 @@ public class Shift {
 		this.starttime =start;
 		this.endtime = end;
 	}
+	
+	public Date getDateIgnoreTime() {
+		Date newdate = starttime;
+		newdate.setHours(0);
+		newdate.setMinutes(0);
+		newdate.setSeconds(0);
+		return newdate;
+	}
 }

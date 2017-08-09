@@ -27,12 +27,10 @@ public class ScheduleReader implements IFileReader{
 	
 
 	@Override
-	public void ParseFile() {
-		try {
+	public void ParseFile() throws IOException {
 			String line = "";
 			file = getFile();
 			BufferedReader br = new BufferedReader(new FileReader(file));
-			try {
 				int linenumber =0;
 				while((line = br.readLine())!=null){
 					linenumber++; 
@@ -57,14 +55,6 @@ public class ScheduleReader implements IFileReader{
 	                	sd.addEmployee(e);
 	                }
 				}
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 	
 	public Date StringToDate(String str) {

@@ -13,5 +13,7 @@
 	<classpathentry kind="lib" path="C:/Users/jvalenti/Jars/jfreechart-1.0.19/lib/orsoncharts-1.4-eval-nofx.jar"/>
 	<classpathentry kind="lib" path="C:/Users/jvalenti/Jars/jfreechart-1.0.19/lib/orsonpdf-1.6-eval.jar"/>
 	<classpathentry kind="lib" path="C:/Users/jvalenti/Jars/jfreechart-1.0.19/lib/servlet.jar"/>
+	<classpathentry kind="lib" path="C:/Users/jvalenti/Jars/CsvReader/opencsv-2.4.jar"/>
+	<classpathentry kind="lib" path="C:/Users/jvalenti/Jars/CsvReader/opencsv-3.10.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
