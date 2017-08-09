@@ -22,7 +22,8 @@ public class Program {
 		//EnergyGraph eg1 = new EnergyGraph(ed);
 		//EmployeeGraph eg = new EmployeeGraph(sd);
 		DualGraph dg = new DualGraph(sd,ed);
-		//Analytics anal = new Analytics(sd,ed); 
+		Analytics anal = new Analytics(sd,ed); 
+		anal.brain();
 	}
 
 }
