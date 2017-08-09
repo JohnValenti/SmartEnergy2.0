@@ -49,46 +49,66 @@ public class ScheduleData {
 		end.setTime(endofweek);
 		for (Calendar d = start;d.compareTo(end)<=0;d.add(Calendar.DAY_OF_MONTH, 1)){
 			ArrayList<Integer> arr =new ArrayList<Integer>(Arrays.asList(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0));
-			weeklydata.put(d.getTime(),arr);
-			System.out.println("donehashmap");
+			weeklydata.put(date.format(d.getTime()),arr);
 		}
 	}
 	
 	public void setDataPerHour() {
 		initDataPerHour();
-		printHashMap();
 		for(int e = 0;e<employees.size();e++) {
 			for(int s=0;s<employees.get(e).shifts.size();s++) {
 				if((employees.get(e).shifts.get(s).starttime.getDate()==employees.get(e).shifts.get(s).endtime.getDate())){
 					int starthour = employees.get(e).shifts.get(s).starttime.getHours();
 					int numberofhours = employees.get(e).shifts.get(s).endtime.getHours()-employees.get(e).shifts.get(s).starttime.getHours();
-					System.out.println(starthour);
-					System.out.println(numberofhours);
-					System.out.println(employees.get(e).shifts.get(s).starttime);
-					System.out.println(employees.get(e).shifts.get(s).starttime);
-					ArrayList<Integer> temp = weeklydata.get(employees.get(e).shifts.get(s).getDateIgnoreTime());//.addEmployee(starthour, numberofhours);
-					System.out.println(employees.get(e).shifts.get(s).starttime);
-					int a = 0;
-					
-					System.out.println(a);
-					/*
-					for(int i= starthour;i<numberofhours;i++) {
-						int q =temp.get(i);
-						temp.add(i,q);
+					ArrayList<Integer> temp = new ArrayList<Integer>();
+					temp = weeklydata.get(date.format(employees.get(e).shifts.get(s).starttime));
+					for(int i =starthour;i<starthour+numberofhours;i++) {
+						temp.set(i, temp.get(i)+1);
 					}
-					*/
-					//weeklydata.put(employees.get(e).shifts.get(s).starttime,temp);
-					//System.out.println(starthour);
-					//System.out.println(numberofhours);
-					//temp.addEmployeesolohour(starthour);
-					//weeklydata.put(employees.get(e).shifts.get(s).starttime, temp);
-					//weeklydata.get(employees.get(e).shifts.get(s).starttime.getDate()).addEmployee(starthour, numberofhours);
+					weeklydata.put(date.format(employees.get(e).shifts.get(s).starttime), temp);
+
 				}else {
-					System.out.println(employees.get(e).name + "'s Shift is over 2 days we need to code for this edge case");
+					//System.out.println(employees.get(e).name + "'s Shift is over 2 days we need to code for this edge case");
+					int starthour = employees.get(e).shifts.get(s).starttime.getHours();
+					int numberofhours = 24+employees.get(e).shifts.get(s).endtime.getHours()-employees.get(e).shifts.get(s).starttime.getHours();
+					ArrayList<Integer> temp = new ArrayList<Integer>();
+					temp = weeklydata.get(date.format(employees.get(e).shifts.get(s).starttime));
+					ArrayList<Integer> tempnextday = new ArrayList<Integer>();
+					tempnextday = weeklydata.get(date.format(employees.get(e).shifts.get(s).AddADay()));
+					for(int i =starthour;i<starthour+numberofhours;i++) {
+						if(i<=23) {
+							temp.set(i, temp.get(i)+1);
+						}else {
+							if (tempnextday!=null) {
+								tempnextday.set(i-24, tempnextday.get(i-24)+1);
+							}
+						}
+					}
+					weeklydata.put(date.format(employees.get(e).shifts.get(s).starttime), temp);
+					weeklydata.put(date.format(employees.get(e).shifts.get(s).AddADay()), tempnextday);
 				}
 				
 			}
 		}
+		setAverageDay();
+	}
+	
+	public void setAverageDay() {
+		ArrayList<Integer> runningsum = new ArrayList<Integer>(Arrays.asList(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0));
+		int count = 0;
+		Iterator it = weeklydata.entrySet().iterator();
+	    while (it.hasNext()) {
+	        Map.Entry pair = (Map.Entry)it.next();
+	        ArrayList<Integer> temp = (ArrayList<Integer>) pair.getValue();
+	        for(int i = 0; i<temp.size();i++) {
+	        	runningsum.set(i, runningsum.get(i)+temp.get(i));
+	        }
+	        count++;
+	    }
+	    for(int i = 0;i<runningsum.size();i++) {
+	    	runningsum.set(i, runningsum.get(i)/count);
+	    }
+	    averageday = runningsum;
 	}
 	
 	
@@ -110,11 +130,7 @@ public class ScheduleData {
 		Iterator it = weeklydata.entrySet().iterator();
 	    while (it.hasNext()) {
 	        Map.Entry pair = (Map.Entry)it.next();
-	        	System.out.println(pair.getKey() + " = " + pair.getValue());
-	        
-	        it.remove();
+	        System.out.println(pair.getKey() + " = " + pair.getValue());
 	    }
-	    
-
 	}
 }

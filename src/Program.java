@@ -17,11 +17,13 @@ public class Program {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		sd.FakeDataPerHour();
+		//sd.FakeDataPerHour();
+		sd.setDataPerHour();
+		//sd.printHashMap();
 		EnergyGraph eg1 = new EnergyGraph(ed);
 		EmployeeGraph eg = new EmployeeGraph(sd);
 		
-		Analytics anal = new Analytics(sd,ed); 
+		//Analytics anal = new Analytics(sd,ed); 
 	}
 
 }

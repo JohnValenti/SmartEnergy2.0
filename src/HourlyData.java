@@ -13,7 +13,7 @@ public class HourlyData {
 		oneday.set(hour, oneday.get(hour)+1);
 	}
 	
-	public void addEmployee (int starthour, int length) {
+	public void addEmployeehours (int starthour, int length) {
 		System.out.println("HEre");
 		for(int i = 0;i<length;i++) {
 			addEmployeesolohour(starthour+i);
