@@ -6,6 +6,10 @@ public class Program {
 		ScheduleReader sr = new ScheduleReader(sd,"C:\\Users\\jvalenti\\SmartPower\\SmartPower\\ScheduleData\\Schedule.txt");
 		sr.ParseFile();
 		sd.PrintEmployees();
+
+		//sd.setDataPerHour();
+		sd.FakeDataPerHour();
+		sd.printHashMap();
 	}
 
 }
