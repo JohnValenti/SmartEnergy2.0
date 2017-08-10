@@ -9,7 +9,7 @@ public class Analytics {
 	ArrayList<Double> costings = new ArrayList<Double>();
 	//private static double CONSTANTPRICE = 1000; 
 	int averageservicelevel = 0;
-	int offset = 1;
+	int offset = 3;
 	DateFormat datetime = new SimpleDateFormat("dd/MM/yyyy h:mm a");
 	
 	public Analytics(ScheduleData sd, EnergyData ed) {
@@ -128,15 +128,32 @@ public class Analytics {
 				int endhour =sd.employees.get(e).shifts.get(s).starttime.getHours();
 				boolean sameday =(sd.employees.get(e).shifts.get(s).starttime.getDate()==sd.employees.get(e).shifts.get(s).endtime.getDate());
 				if(starthour>offset&&sameday&&endhour+offset<24) {
+					//left or right
+					//number of days 
+					double left = 0;
+					double right = 0;
+					double leftholder =0;
+					double rightholder=0;
+					int numberofshiftholder = 0;
 					for(int i=1; i<=offset;i++) {
-						double leftshift = ed.average.get(endhour) - ed.average.get(starthour-i);
-						double rightshift = ed.average.get(starthour) - ed.average.get(endhour+i);
-						if(leftshift>0||rightshift>0) {
-							if(leftshift>rightshift) {
-								suggestions.add(sd.employees.get(e).name +"'s shift on "+datetime.format(sd.employees.get(e).shifts.get(s).starttime)+" would save "+leftshift+" £/MWh if started 1 hour earlier");
-							}else {
-								suggestions.add(sd.employees.get(e).name +"'s shift on "+datetime.format(sd.employees.get(e).shifts.get(s).starttime)+" would save "+rightshift+" £/MWh if started 1 hour later");
-							}
+						leftholder =leftholder + ed.average.get(endhour-i+1) - ed.average.get(starthour-i);
+						rightholder = rightholder +ed.average.get(starthour+i-1) - ed.average.get(endhour+i);
+						
+						if(leftholder>left) {
+							left = leftholder;
+							numberofshiftholder = i;
+						}
+						if(rightholder>right) {
+							right = rightholder;
+							numberofshiftholder = i;
+						}
+						
+					}
+					if(numberofshiftholder>0) {
+						if(left>right) {
+							suggestions.add(sd.employees.get(e).name +"'s shift on "+datetime.format(sd.employees.get(e).shifts.get(s).starttime)+" would save "+left+" £/MWh if started "+numberofshiftholder+" hour earlier");
+						}else {
+							suggestions.add(sd.employees.get(e).name +"'s shift on "+datetime.format(sd.employees.get(e).shifts.get(s).starttime)+" would save "+right+" £/MWh if started "+numberofshiftholder+" hour later");
 						}
 					}
 
@@ -152,6 +169,7 @@ public class Analytics {
 		}
 		
 	}
+	
 	
 
 }
