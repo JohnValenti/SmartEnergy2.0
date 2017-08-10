@@ -27,8 +27,8 @@ public class Analytics {
 		System.out.println("Average Service Level: "+averageservicelevel);
 		System.out.println("Most Expensive hour is: "+getMax(costings)+":00");
 		System.out.println("Most Expensive hour of leccy is: "+getMax(ed.average)+":00");
-		System.out.println("The cheapest hour (where employees>0): "+getMin(costings)+":00");
-		System.out.println("The cheapest hour (with above average service level): "+ getMinwithservice(costings)+ ":00");
+		System.out.println("The cheapest hour (where employees>0): "+getMinEmployeeNonZero(costings)+":00");
+		System.out.println("The cheapest hour (with above average service level): "+ getMinAboveAverageService(costings)+ ":00");
 	}
 	
 	public int getMax(ArrayList<Double> lst) {
@@ -43,7 +43,7 @@ public class Analytics {
 		return position;
 	}
 	
-	public int getMin(ArrayList<Double> lst) {
+	public int getMinEmployeeNonZero(ArrayList<Double> lst) {
 		int position = -1;
 		for(int i= 0; i<lst.size();i++) {
 			if(lst.get(i)>0) {
@@ -64,12 +64,10 @@ public class Analytics {
 		}else {
 			return -1;//no value>0
 		}
-		
-		
 		return position;
 	}
 	
-	public int getMinwithservice(ArrayList<Double> lst) {
+	public int getMinAboveAverageService(ArrayList<Double> lst) {
 		int position = -1;
 		for(int i= 0; i<lst.size();i++) {
 			if(lst.get(i)>averageservicelevel) {

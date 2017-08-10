@@ -23,7 +23,15 @@ public class Shift {
 		plus1.setTime(starttime);
 		plus1.add(Calendar.DAY_OF_MONTH,1);
 		return plus1.getTime();
-		
-		
+	}
+	
+	//returns hour length of shift
+	public int LengthOfShift() {
+		int length = 0;
+		length = endtime.getHours()-starttime.getHours();
+		if(length<0) {//if length is negative shift is over 2 days
+			length = 24 + length;
+		}
+		return length;
 	}
 }
