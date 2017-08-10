@@ -34,4 +34,10 @@ public class Shift {
 		}
 		return length;
 	}
+	
+	public boolean OverTwoDays() {
+		int length = 0;
+		length = endtime.getHours()-starttime.getHours();
+		return(length>=0);
+	}
 }
