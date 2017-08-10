@@ -70,7 +70,7 @@ public class Analytics {
 	public int getMinAboveAverageService(ArrayList<Double> lst) {
 		int position = -1;
 		for(int i= 0; i<lst.size();i++) {
-			if(lst.get(i)>averageservicelevel) {
+			if(sd.averageday.get(i)>averageservicelevel) {
 				position = i;
 				break;
 			}
@@ -86,10 +86,8 @@ public class Analytics {
 				}
 			}
 		}else {
-			return -1;//no value>0
+			return -1;//no value>average
 		}
-		
-		
 		return position;
 	}
 	//***max hour***
