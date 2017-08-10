@@ -25,8 +25,14 @@ public class Analytics {
 	
 	public void brain() {
 		System.out.println("Average Service Level: "+averageservicelevel);
+		System.out.println("-----------------------");
+		System.out.println("***ELECTRICITY DATA***");
+		System.out.println("Most Expensive hour of electricity is: "+getMax(ed.average)+":00");
+		System.out.println("Cheapest hour of electricity is: "+getMin(ed.average)+":00");
+		System.out.println("The cheapest electricity price (where employees>0): "+getMinEmployeeNonZero(ed.average)+":00");
+		System.out.println("The cheapest electicity price (with above average service level): "+ getMinAboveAverageService(ed.average)+ ":00");		
+		System.out.println("***COMPANY RUNNING COSTS***");
 		System.out.println("Most Expensive hour is: "+getMax(costings)+":00");
-		System.out.println("Most Expensive hour of leccy is: "+getMax(ed.average)+":00");
 		System.out.println("The cheapest hour (where employees>0): "+getMinEmployeeNonZero(costings)+":00");
 		System.out.println("The cheapest hour (with above average service level): "+ getMinAboveAverageService(costings)+ ":00");
 	}
@@ -37,6 +43,18 @@ public class Analytics {
 		for(int i =1;i<lst.size();i++) {
 			if(lst.get(i)>max) {
 				max = lst.get(i);
+				position = i;
+			}
+		}
+		return position;
+	}
+	
+	public int getMin(ArrayList<Double> lst) {
+		double min = lst.get((0));
+		int position = 0;
+		for(int i =1;i<lst.size();i++) {
+			if(lst.get(i)<min) {
+				min = lst.get(i);
 				position = i;
 			}
 		}
@@ -90,14 +108,5 @@ public class Analytics {
 		}
 		return position;
 	}
-	//***max hour***
-	//cheapest hour with employees - companies cheapiest hour
-	
-	//***cheapest hour with above average employees***
-	//*cheapest electricity price with non zero employees*
-	//*cheapest electricity price with above average employees*
-	
-	//max hour with below average employees
-	
-	
+
 }
