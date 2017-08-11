@@ -18,4 +18,5 @@ public class Employee {
 	void addShift(Date starttime, Date endtime) {
 		shifts.add(new Shift(starttime, endtime));
 	}
+	
 }

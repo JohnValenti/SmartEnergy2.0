@@ -4,7 +4,7 @@ public class Program {
 
 	public static void main(String[] args) {
 		ScheduleData sd = new ScheduleData();
-		ScheduleReader sr = new ScheduleReader(sd,"C:\\Users\\jvalenti\\SmartPower\\SmartPower\\Data\\Schedule.txt");
+		ScheduleReader sr = new ScheduleReader(sd,"C:\\Users\\jvalenti\\SmartPower\\SmartPower\\Data\\WorldXI.txt");
 		
 		EnergyData ed = new EnergyData();
 		EnergyReader er = new EnergyReader(ed,"C:\\Users\\jvalenti\\SmartPower\\SmartPower\\Data\\NordElectrictyPrices.csv");
@@ -19,8 +19,8 @@ public class Program {
 		}
 		//sd.FakeDataPerHour();
 		sd.setDataPerHour();
-		//EnergyGraph eg1 = new EnergyGraph(ed);
-		//EmployeeGraph eg = new EmployeeGraph(sd);
+		EnergyGraph eg1 = new EnergyGraph(ed);
+		EmployeeGraph eg = new EmployeeGraph(sd);
 		DualGraph dg = new DualGraph(sd,ed);
 		Analytics anal = new Analytics(sd,ed); 
 		anal.BaseAnalytics();

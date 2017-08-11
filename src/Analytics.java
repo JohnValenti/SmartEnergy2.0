@@ -1,6 +1,8 @@
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 public class Analytics {
 	ScheduleData sd;
@@ -121,6 +123,9 @@ public class Analytics {
 		ArrayList<String> suggestions = new ArrayList<String>();
 		ArrayList<Employee> newshifts = new ArrayList<Employee>();
 		for(int e =0;e<sd.employees.size();e++) {
+			Employee newdude = new Employee();
+			newdude.setName(sd.employees.get(e).name);
+			newshifts.add(newdude);
 			for(int s=0;s<sd.employees.get(e).shifts.size();s++) {
 				//for each shift in each employee
 				//check x hour befor, check x hour after
@@ -145,8 +150,15 @@ public class Analytics {
 							leftlefttocheck = leftlefttocheck +24;
 							backaday = true;
 						}
+						if(leftrighttocheck <0) {
+							leftrighttocheck = leftrighttocheck +24;
+							backaday = true;
+						}
 						if(rightrighttocheck >23) {
 							rightrighttocheck = rightrighttocheck - 24;
+						}
+						if(rightlefttocheck>23) {
+							rightlefttocheck = rightlefttocheck - 24;
 						}
 						leftholder =leftholder + ed.average.get(leftlefttocheck) - ed.average.get(leftrighttocheck);
 						rightholder = rightholder +ed.average.get(rightlefttocheck) - ed.average.get(rightrighttocheck);
@@ -159,14 +171,24 @@ public class Analytics {
 							right = rightholder;
 							numberofshiftholder = i;
 						}
-						
 					}
 					if(numberofshiftholder>0) {
-						if(left>right) {
+						if(left>right) {							
 							suggestions.add(sd.employees.get(e).name +"'s shift on "+datetime.format(sd.employees.get(e).shifts.get(s).starttime)+" would save "+left+" £/MWh if started "+numberofshiftholder+" hour earlier");
+							numberofshiftholder = -numberofshiftholder;
 						}else {
 							suggestions.add(sd.employees.get(e).name +"'s shift on "+datetime.format(sd.employees.get(e).shifts.get(s).starttime)+" would save "+right+" £/MWh if started "+numberofshiftholder+" hour later");
 						}
+						Calendar cal = Calendar.getInstance();
+						// remove next line if you're always using the current time.
+						cal.setTime(sd.employees.get(e).shifts.get(s).starttime);
+						cal.add(Calendar.HOUR_OF_DAY, +numberofshiftholder);
+						Date newstart = cal.getTime();
+						cal.setTime(sd.employees.get(e).shifts.get(s).endtime);
+						cal.add(Calendar.HOUR_OF_DAY, +numberofshiftholder);
+						Date newend = cal.getTime();
+						//new shift shifted left
+						newshifts.get(e).addShift(newstart, newend);
 					}
 
 
@@ -179,7 +201,13 @@ public class Analytics {
 		for(int i = 0; i<suggestions.size();i++) {
 			System.out.println(suggestions.get(i));
 		}
-		
+		System.out.print("---NEW EMPLOYEE SCHEDULES---");
+		for(int i = 0;i<newshifts.size();i++) {
+			System.out.println("Name: "+newshifts.get(i).name);
+			for(int j = 0; j<newshifts.get(i).shifts.size();j++) {
+				System.out.println("Shift: "+datetime.format(newshifts.get(i).shifts.get(j).starttime)+" - "+datetime.format(newshifts.get(i).shifts.get(j).endtime));
+			}
+		}
 	}
 	
 	

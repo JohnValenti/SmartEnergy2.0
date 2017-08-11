@@ -40,4 +40,5 @@ public class Shift {
 		length = endtime.getHours()-starttime.getHours();
 		return(length>=0);
 	}
+	
 }
