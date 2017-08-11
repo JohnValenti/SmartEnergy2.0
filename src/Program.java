@@ -25,6 +25,9 @@ public class Program {
 		Analytics anal = new Analytics(sd,ed); 
 		anal.BaseAnalytics();
 		anal.changeSchedules();
+		
+		GUI gooey = new GUI();
 	}
 
 }
+ 
