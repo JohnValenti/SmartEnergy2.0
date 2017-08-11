@@ -127,7 +127,8 @@ public class Analytics {
 				int starthour =sd.employees.get(e).shifts.get(s).starttime.getHours();
 				int endhour =sd.employees.get(e).shifts.get(s).starttime.getHours();
 				boolean sameday =(sd.employees.get(e).shifts.get(s).starttime.getDate()==sd.employees.get(e).shifts.get(s).endtime.getDate());
-				if(starthour>offset&&sameday&&endhour+offset<24) {
+				boolean backaday = false;
+				//if(starthour>offset&&sameday&&endhour+offset<24) {
 					//left or right
 					//number of days 
 					double left = 0;
@@ -136,8 +137,19 @@ public class Analytics {
 					double rightholder=0;
 					int numberofshiftholder = 0;
 					for(int i=1; i<=offset;i++) {
-						leftholder =leftholder + ed.average.get(endhour-i+1) - ed.average.get(starthour-i);
-						rightholder = rightholder +ed.average.get(starthour+i-1) - ed.average.get(endhour+i);
+						int leftlefttocheck = endhour-i+1;
+						int leftrighttocheck = starthour-i;
+						int rightlefttocheck = starthour+i-1;
+						int rightrighttocheck = endhour+i;
+						if(leftlefttocheck <0) {
+							leftlefttocheck = leftlefttocheck +24;
+							backaday = true;
+						}
+						if(rightrighttocheck >23) {
+							rightrighttocheck = rightrighttocheck - 24;
+						}
+						leftholder =leftholder + ed.average.get(leftlefttocheck) - ed.average.get(leftrighttocheck);
+						rightholder = rightholder +ed.average.get(rightlefttocheck) - ed.average.get(rightrighttocheck);
 						
 						if(leftholder>left) {
 							left = leftholder;
@@ -158,9 +170,9 @@ public class Analytics {
 					}
 
 
-				}else {
+				//}else {
 					//need to check day before
-				}
+				//}
 			}
 		}
 		System.out.println("---SCHEDULE SUGGESTIONS---");
