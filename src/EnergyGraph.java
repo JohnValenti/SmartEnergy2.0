@@ -28,7 +28,8 @@ public class EnergyGraph extends JFrame {
 		JPanel graphPanel = createGraphPanel();
 		add(graphPanel, BorderLayout.CENTER);
 		setSize(980,720);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setLocationRelativeTo(null);
 		setVisible(true);
 	}

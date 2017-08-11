@@ -29,8 +29,8 @@ public class DualGraph extends JFrame {
 		
 		JPanel graphPanel = createGraphPanel();
 		add(graphPanel, BorderLayout.CENTER);
-		setSize(980,720);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100,100,980,720);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setLocationRelativeTo(null);
 		setVisible(true);
 	}

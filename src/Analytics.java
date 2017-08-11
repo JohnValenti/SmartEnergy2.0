@@ -13,6 +13,7 @@ public class Analytics {
 	int averageservicelevel = 0;
 	int offset = 3;
 	DateFormat datetime = new SimpleDateFormat("dd/MM/yyyy h:mm a");
+	ArrayList<Employee> newshifts = new ArrayList<Employee>();
 	
 	public Analytics(ScheduleData sd, EnergyData ed) {
 		this.sd = sd;
@@ -33,18 +34,20 @@ public class Analytics {
 		averageservicelevel = averageservicelevel/sd.averageday.size();
 	}
 	
-	public void BaseAnalytics() {
-		System.out.println("Average Service Level: "+averageservicelevel);
-		System.out.println("-----------------------");
-		System.out.println("***ELECTRICITY DATA***");
-		System.out.println("Most Expensive hour of electricity is: "+getMax(ed.average)+":00");
-		System.out.println("Cheapest hour of electricity is: "+getMin(ed.average)+":00");
-		System.out.println("The cheapest electricity price (where employees>0): "+getMinEmployeeNonZero(ed.average)+":00");
-		System.out.println("The cheapest electicity price (with above average service level): "+ getMinAboveAverageService(ed.average)+ ":00");		
-		System.out.println("***COMPANY RUNNING COSTS***");
-		System.out.println("Most Expensive hour is: "+getMax(costings)+":00");
-		System.out.println("The cheapest hour (where employees>0): "+getMinEmployeeNonZero(costings)+":00");
-		System.out.println("The cheapest hour (with above average service level): "+ getMinAboveAverageService(costings)+ ":00");
+	public ArrayList<String> BaseAnalytics() {
+		ArrayList<String> tempo = new ArrayList<String>();
+		tempo.add("Average Service Level: "+averageservicelevel);
+		tempo.add("-----------------------");
+		tempo.add("***ELECTRICITY DATA***");
+		tempo.add("Most Expensive hour of electricity is: "+getMax(ed.average)+":00");
+		tempo.add("Cheapest hour of electricity is: "+getMin(ed.average)+":00");
+		tempo.add("The cheapest electricity price (where employees>0): "+getMinEmployeeNonZero(ed.average)+":00");
+		tempo.add("The cheapest electicity price (with above average service level): "+ getMinAboveAverageService(ed.average)+ ":00");		
+		tempo.add("***COMPANY RUNNING COSTS***");
+		tempo.add("Most Expensive hour is: "+getMax(costings)+":00");
+		tempo.add("The cheapest hour (where employees>0): "+getMinEmployeeNonZero(costings)+":00");
+		tempo.add("The cheapest hour (with above average service level): "+ getMinAboveAverageService(costings)+ ":00");
+		return tempo;
 	}
 	
 	public int getMax(ArrayList<Double> lst) {
@@ -119,9 +122,10 @@ public class Analytics {
 		return position;
 	}
 	
-	public void changeSchedules() {
+	public ArrayList<String> changeSchedules(int vary) {
+		offset = vary;
 		ArrayList<String> suggestions = new ArrayList<String>();
-		ArrayList<Employee> newshifts = new ArrayList<Employee>();
+		suggestions.add("---SCHEDULE SUGGESTIONS---");
 		for(int e =0;e<sd.employees.size();e++) {
 			Employee newdude = new Employee();
 			newdude.setName(sd.employees.get(e).name);
@@ -197,10 +201,12 @@ public class Analytics {
 				//}
 			}
 		}
-		System.out.println("---SCHEDULE SUGGESTIONS---");
-		for(int i = 0; i<suggestions.size();i++) {
-			System.out.println(suggestions.get(i));
-		}
+		return suggestions;
+		//System.out.println("---SCHEDULE SUGGESTIONS---");
+		//for(int i = 0; i<suggestions.size();i++) {
+			//System.out.println(suggestions.get(i));
+		//}
+		/*
 		System.out.print("---NEW EMPLOYEE SCHEDULES---");
 		for(int i = 0;i<newshifts.size();i++) {
 			System.out.println("Name: "+newshifts.get(i).name);
@@ -208,6 +214,11 @@ public class Analytics {
 				System.out.println("Shift: "+datetime.format(newshifts.get(i).shifts.get(j).starttime)+" - "+datetime.format(newshifts.get(i).shifts.get(j).endtime));
 			}
 		}
+		*/
+	}
+	
+	public ArrayList<Employee> getNewSchedule() {
+		return newshifts;
 	}
 	
 	

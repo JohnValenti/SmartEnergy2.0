@@ -19,14 +19,13 @@ public class Program {
 		}
 		//sd.FakeDataPerHour();
 		sd.setDataPerHour();
-		EnergyGraph eg1 = new EnergyGraph(ed);
-		EmployeeGraph eg = new EmployeeGraph(sd);
-		DualGraph dg = new DualGraph(sd,ed);
-		Analytics anal = new Analytics(sd,ed); 
-		anal.BaseAnalytics();
-		anal.changeSchedules();
-		
-		GUI gooey = new GUI();
+		//EnergyGraph eg1 = new EnergyGraph(ed);
+		//EmployeeGraph eg = new EmployeeGraph(sd);
+		//DualGraph dg = new DualGraph(sd,ed);
+		//Analytics anal = new Analytics(sd,ed); 
+		//anal.BaseAnalytics();
+		//anal.changeSchedules();
+		GUI gooey = new GUI(sd,ed);
 	}
 
 }
