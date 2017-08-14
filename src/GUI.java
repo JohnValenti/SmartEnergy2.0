@@ -2,6 +2,8 @@ import java.awt.Color;
 import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -34,9 +36,10 @@ public class GUI extends JFrame{
 	JCheckBox butnewschedule;
 	JTextField txtvary;
 	JButton cmdsmart;
-	Boolean gooddata = true;
+	Boolean gooddata = false;
 	ScheduleData sd;
 	EnergyData ed;
+	DecimalFormat df = new DecimalFormat("0.0000");
 	
 	
 	
@@ -66,13 +69,24 @@ public class GUI extends JFrame{
 	  
 	  public void FilePane() {
 		  filepane = new JPanel();
-		  txtfilename = new JTextField("filename.txt goes here");
+		  txtfilename = new JTextField(20);
+		  txtfilename.setText("C:\\Users\\jvalenti\\SmartPower\\SmartPower\\Data\\GOAT.txt");
 		  cmdfile = new JButton("Choose File");
 		  lblgng = new JLabel("No good");
 		  lblgng.setForeground(Color.RED);
 		  filepane.add(txtfilename);
 		  filepane.add(cmdfile);
 		  filepane.add(lblgng);
+		  
+		  cmdfile.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				setFileChosen(!gooddata);
+			}
+			  
+		  });
+				  
 	  }
 	  
 	  public void GraphPane() {
@@ -91,6 +105,7 @@ public class GUI extends JFrame{
 						}
 						if(butemployees.isSelected()) {
 							EmployeeGraph eg = new EmployeeGraph(sd);
+							new ScheduleGraph(sd);
 						}
 						if(energyvemployees.isSelected()) {
 							DualGraph dg = new DualGraph(sd,ed);
@@ -139,15 +154,35 @@ public class GUI extends JFrame{
 							new GUIText(anal.BaseAnalytics());
 						}
 						if(butsuggestions.isSelected()) {
-							if(parsed&&vary>=0&&vary<24) {
+							if(parsed&&vary>0&&vary<24) {
 								new GUIText(anal.changeSchedules(vary));
 							}else {
-								JOptionPane.showMessageDialog(null, "Varience must be a number >=0 && <24", "Doy", JOptionPane.INFORMATION_MESSAGE);
+								JOptionPane.showMessageDialog(null, "Varience must be a number >0 && <24", "Doy", JOptionPane.INFORMATION_MESSAGE);
 							}
 							
 						}
 						if(butnewschedule.isSelected()) {
-							//graph new schedule
+							//get new schedule
+							//pass into schedule graph
+							//pop up with total saving
+							if(parsed&&vary>0&&vary<24) {
+								ArrayList<String> terriblecodingpractice = anal.changeSchedules(vary);
+								ScheduleData nsd = new ScheduleData();
+								nsd.employees = anal.getNewSchedule();
+								nsd.setDates(sd.startofweek, sd.endofweek);
+								nsd.setDataPerHour();
+								new EmployeeGraph(nsd);
+								new ScheduleGraph(nsd);
+								terriblecodingpractice.clear();
+								double prev = anal.getTotalAverageDay(sd.averageday);
+								double new1 = anal.getTotalAverageDay(nsd.averageday);
+								terriblecodingpractice.add("Previous Average Daily Electricity: "+ df.format(prev)+ " Mw/hours");
+								terriblecodingpractice.add("New Average Daily Electricity: "+ df.format(new1)+ " Mw/hours");
+								terriblecodingpractice.add("Average Daily Saving: "+df.format(prev-new1)+ " Mw/hours");
+								//new GUIText(terriblecodingpractice);
+							}else {
+								JOptionPane.showMessageDialog(null, "Varience must be a number >0 && <13", "Doy", JOptionPane.INFORMATION_MESSAGE);
+							}
 							
 						}
 					}else {
@@ -160,6 +195,17 @@ public class GUI extends JFrame{
 		  smartpane.add(butsuggestions);
 		  smartpane.add(butnewschedule);
 		  smartpane.add(cmdsmart);
+	  }
+	  
+	  public void setFileChosen(Boolean b) {
+		  gooddata = b;
+		  if(b) {
+			  lblgng.setForeground(Color.GREEN);
+			  lblgng.setText("Good!");
+		  }else {
+			  lblgng.setForeground(Color.RED);
+			  lblgng.setText("No good");
+		  }
 	  }
 	  
 	  

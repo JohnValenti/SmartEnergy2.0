@@ -1,4 +1,5 @@
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -7,13 +8,14 @@ import java.util.Date;
 public class Analytics {
 	ScheduleData sd;
 	EnergyData ed;
-	private static double COSTPEREMPLOYEEHOUR = 0.4; 
+	private static double COSTPEREMPLOYEEHOUR = 1; 
 	ArrayList<Double> costings = new ArrayList<Double>();
 	//private static double CONSTANTPRICE = 1000; 
 	int averageservicelevel = 0;
 	int offset = 3;
 	DateFormat datetime = new SimpleDateFormat("dd/MM/yyyy h:mm a");
 	ArrayList<Employee> newshifts = new ArrayList<Employee>();
+	DecimalFormat df = new DecimalFormat("0.0000"); 
 	
 	public Analytics(ScheduleData sd, EnergyData ed) {
 		this.sd = sd;
@@ -36,7 +38,10 @@ public class Analytics {
 	
 	public ArrayList<String> BaseAnalytics() {
 		ArrayList<String> tempo = new ArrayList<String>();
-		tempo.add("Average Service Level: "+averageservicelevel);
+		tempo.add("Average Hourly Service Level: "+averageservicelevel);
+		tempo.add("-----------------------");
+		tempo.add("Daily Electricity: "+getTotal()+" MW/hours");
+		//weekly leecy/?
 		tempo.add("-----------------------");
 		tempo.add("***ELECTRICITY DATA***");
 		tempo.add("Most Expensive hour of electricity is: "+getMax(ed.average)+":00");
@@ -48,6 +53,14 @@ public class Analytics {
 		tempo.add("The cheapest hour (where employees>0): "+getMinEmployeeNonZero(costings)+":00");
 		tempo.add("The cheapest hour (with above average service level): "+ getMinAboveAverageService(costings)+ ":00");
 		return tempo;
+	}
+	
+	public double getTotal() {
+		double total = 0;
+		for(int i = 0;i<24;i++) {
+			total = total + sd.averageday.get(i)*ed.average.get(i);
+		}
+		return total;
 	}
 	
 	public int getMax(ArrayList<Double> lst) {
@@ -177,11 +190,12 @@ public class Analytics {
 						}
 					}
 					if(numberofshiftholder>0) {
-						if(left>right) {							
-							suggestions.add(sd.employees.get(e).name +"'s shift on "+datetime.format(sd.employees.get(e).shifts.get(s).starttime)+" would save "+left+" £/MWh if started "+numberofshiftholder+" hour earlier");
+						if(left>right) {
+							
+							suggestions.add(sd.employees.get(e).name +"'s shift on "+datetime.format(sd.employees.get(e).shifts.get(s).starttime)+" would save "+df.format(left)+" £/MWh if started "+numberofshiftholder+" hour earlier");
 							numberofshiftholder = -numberofshiftholder;
 						}else {
-							suggestions.add(sd.employees.get(e).name +"'s shift on "+datetime.format(sd.employees.get(e).shifts.get(s).starttime)+" would save "+right+" £/MWh if started "+numberofshiftholder+" hour later");
+							suggestions.add(sd.employees.get(e).name +"'s shift on "+datetime.format(sd.employees.get(e).shifts.get(s).starttime)+" would save "+df.format(right)+" £/MWh if started "+numberofshiftholder+" hour later");
 						}
 						Calendar cal = Calendar.getInstance();
 						// remove next line if you're always using the current time.
@@ -194,8 +208,6 @@ public class Analytics {
 						//new shift shifted left
 						newshifts.get(e).addShift(newstart, newend);
 					}
-
-
 				//}else {
 					//need to check day before
 				//}
@@ -221,6 +233,13 @@ public class Analytics {
 		return newshifts;
 	}
 	
+	public double getTotalAverageDay(ArrayList<Integer> averageday) {
+		double total = 0;
+		for(int i =0;i<ed.average.size();i++) {
+			total = total +((ed.average.get(i)*3)*averageday.get(i));
+		}
+		return total;
+	}
 	
 
 }

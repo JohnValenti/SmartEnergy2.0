@@ -4,7 +4,7 @@ public class Program {
 
 	public static void main(String[] args) {
 		ScheduleData sd = new ScheduleData();
-		ScheduleReader sr = new ScheduleReader(sd,"C:\\Users\\jvalenti\\SmartPower\\SmartPower\\Data\\WorldXI.txt");
+		ScheduleReader sr = new ScheduleReader(sd,"C:\\Users\\jvalenti\\SmartPower\\SmartPower\\Data\\GOAT.txt");
 		
 		EnergyData ed = new EnergyData();
 		EnergyReader er = new EnergyReader(ed,"C:\\Users\\jvalenti\\SmartPower\\SmartPower\\Data\\NordElectrictyPrices.csv");

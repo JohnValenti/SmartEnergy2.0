@@ -23,7 +23,7 @@ public class DualGraph extends JFrame {
 	EnergyData ed;
 	
 	public DualGraph(ScheduleData sd, EnergyData ed){
-		super("XY Line Chart Example with JFreechart");
+		super("Costings");
 		this.sd = sd;
 		this.ed = ed;
 		
@@ -64,7 +64,7 @@ public class DualGraph extends JFrame {
 			for(int i = 0;i<ed.August.size();i++) {
 				series1.add(i, ed.average.get(i));
 				series2.add(i,sd.averageday.get(i));
-				double cost = ed.average.get(i) * sd.averageday.get(i) * 0.1;
+				double cost = ed.average.get(i) * sd.averageday.get(i)*0.2;
 				series3.add(i, cost);
 			}
 			

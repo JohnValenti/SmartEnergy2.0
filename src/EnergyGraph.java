@@ -22,7 +22,7 @@ public class EnergyGraph extends JFrame {
 	EnergyData ed;
 	
 	public EnergyGraph(EnergyData ed){
-		super("XY Line Chart Example with JFreechart");
+		super("Energy Prices");
 		this.ed = ed;
 
 		JPanel graphPanel = createGraphPanel();

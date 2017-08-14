@@ -19,4 +19,7 @@ public class Employee {
 		shifts.add(new Shift(starttime, endtime));
 	}
 	
+	String getName() {
+		return name;
+	}
 }

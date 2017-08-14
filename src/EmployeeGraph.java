@@ -22,7 +22,7 @@ public class EmployeeGraph extends JFrame {
 	ScheduleData sd;
 	
 	public EmployeeGraph(ScheduleData sd) {
-		super("XY Line Chart Example with JFreechart");
+		super("Average Daily Employee");
 		this.sd = sd;
 
 		JPanel graphPanel = createGraphPanel();
