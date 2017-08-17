@@ -17,7 +17,7 @@ public class GUIText extends JFrame{
 	public GUIText(ArrayList<String> data) // the frame constructor method
 	  {
 	    super("SMART POWER"); 
-	    setBounds(300,300,750,500);
+	    setBounds(300,300,750,900);
 	    setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 	    this.data = data;
 	    lstdata = new JList(model);
@@ -28,7 +28,7 @@ public class GUIText extends JFrame{
 	    Populate();
 	    JScrollPane sp = new JScrollPane(lstdata,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 	    
-	    sp.setPreferredSize(new Dimension(700, 450));
+	    sp.setPreferredSize(new Dimension(700, 850));
 	    pane.add(sp);
 	    this.add(pane);
 	    setVisible(true); // display this frame

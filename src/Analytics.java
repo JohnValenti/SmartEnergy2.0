@@ -228,10 +228,12 @@ public class Analytics {
 		}
 		*/
 	}
+	  
 	
 	public ArrayList<Employee> getNewSchedule() {
 		return newshifts;
 	}
+	
 	
 	public double getTotalAverageDay(ArrayList<Integer> averageday) {
 		double total = 0;
